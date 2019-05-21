@@ -1,0 +1,213 @@
+Azure Commands
+
+1: Create a VM
+az vm get-instance-view \
+  --name myVM \
+  --resource-group 00d5096b-d4ff-4182-bfd6-52749abb923a \
+  --output table
+
+2: Check VM
+az vm get-instance-view \
+  --name myVM \
+  --resource-group 00d5096b-d4ff-4182-bfd6-52749abb923a \
+  --output table
+  
+3: Configure Nginx
+az vm extension set \
+  --resource-group 00d5096b-d4ff-4182-bfd6-52749abb923a \
+  --vm-name myVM \
+  --name customScript \
+  --publisher Microsoft.Azure.Extensions \
+  --settings "{'fileUris':['https://raw.githubusercontent.com/MicrosoftDocs/mslearn-welcome-to-azure/master/configure-nginx.sh']}" \
+  --protected-settings "{'commandToExecute': './configure-nginx.sh'}"
+  
+4: Command to open port 80 (HTTP) through the firewall
+az vm open-port \
+  --name myVM \
+  --resource-group 00d5096b-d4ff-4182-bfd6-52749abb923a \
+  --port 80
+  
+5: Command to list your VM's public IP address
+az vm show \
+  --name myVM \
+  --resource-group 00d5096b-d4ff-4182-bfd6-52749abb923a \
+  --show-details \
+  --query [publicIps] \
+  --output tsv
+  
+6: Scale up, Increase your VM's size to Standard_DS3_v2
+az vm resize \
+  --resource-group 00d5096b-d4ff-4182-bfd6-52749abb923a \
+  --name myVM \
+  --size Standard_DS3_v2
+  
+7: Command to verify VM size
+az vm show \
+  --resource-group 00d5096b-d4ff-4182-bfd6-52749abb923a \
+  --name myVM \
+  --query "hardwareProfile" \
+  --output tsv
+
+8:  commands in the Cloud Shell now to create a new web app
+cd ~
+mvn archetype:generate -DgroupId=example.demo -DartifactId=helloworld -DinteractiveMode=false -DarchetypeArtifactId=maven-archetype-webapp
+
+mvn package :: from application folder
+
+9: create deployment credentials is from the Azure CLI
+az webapp deployment user set --user-name <username> --password <password>
+
+10: commands to deploy your app with wardeploy
+curl -v -X POST -u sajjayan:Welcome@123 https://sjbestbike.scm.azurewebsites.net/api/wardeploy --data-binary @helloworld.war
+
+11: Creating deployment slot
+create webapp, clikc deployment slot
+
+12:command to configure the URL as a git remote named "production"
+git remote add production <git-clone-url>
+
+13: Command to create new Azure container  registry
+az acr create --name myregistry --resource-group mygroup --sku standard --admin-enabled true
+
+14:  acr build command to run a build for docker image
+az acr build --file Dockerfile --registry myregistry --image myimage .
+
+15: Build a Docker image and upload it to Azure Container Registry
+git clone https://github.com/MicrosoftDocs/mslearn-deploy-run-container-app-service.git
+cd mslearn-deploy-run-container-app-service
+az acr build --registry <container_registry_name> --image webimage .
+
+16: Command to create ACR task 
+az acr task create --registry sjdockerhub --name buildwebapp --image webimage --context https://github.com/MicrosoftDocs/mslearn-deploy-run-container-app-service.git --branch master
+
+17: command in the Cloud Shell to verify that the image has been created and stored in the registry.
+az acr repository list --name $ACR_NAME --output table
+
+18: enable the registry admin account
+az acr update -n $ACR_NAME --admin-enabled true
+az acr credential show --name $ACR_NAME
+
+19: Deploy a container with Azure CLI
+az container create \
+    --resource-group 7dc09c8f-df83-47cd-9da2-79b6f71d42ca \
+    --name acr-tasks \
+    --image $ACR_NAME.azurecr.io/helloacrtasks:v1 \
+    --registry-login-server $ACR_NAME.azurecr.io \
+    --ip-address Public \
+    --location eastus \
+    --registry-username sjdockerhub \
+    --registry-password password
+	
+20: Get the IP address of the Azure container instance using the following command.
+az container show --resource-group  7dc09c8f-df83-47cd-9da2-79b6f71d42ca --name acr-tasks --query ipAddress.ip --output table
+
+21: command to replicate your registry to another region. In this example, we are replicating to the japaneast region
+az acr replication create --registry $ACR_NAME --location japaneast
+
+22: Command to show contianer status created or not
+az container show \
+  --resource-group 13e57cfd-574f-43f5-a1e1-ad232407152c \
+  --name mycontainer \
+  --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" \
+  --out table
+
+23: Command to view contianer logs
+az container logs \
+  --resource-group 13e57cfd-574f-43f5-a1e1-ad232407152c \
+  --name mycontainer-restart-demo
+  
+24:  Command to create cosmos db insstance
+COSMOS_DB_ENDPOINT=$(az cosmosdb create \
+  --resource-group 13e57cfd-574f-43f5-a1e1-ad232407152c \
+  --name $COSMOS_DB_NAME \
+  --query documentEndpoint \
+  --output tsv)
+  
+25: Command  to create contianer using secure enviroment vriables
+az container create \
+  --resource-group 4e6af50e-d896-47e4-a5d6-6ff1e867319e \
+  --name aci-demo-secure \
+  --image microsoft/azure-vote-front:cosmosdb \
+  --ip-address Public \
+  --location eastus \
+  --secure-environment-variables \
+    COSMOS_DB_ENDPOINT=$COSMOS_DB_ENDPOINT \
+    COSMOS_DB_MASTERKEY=$COSMOS_DB_MASTERKEY
+
+26: command to create your storage account.
+
+az storage account create \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --name $STORAGE_ACCOUNT_NAME \
+  --sku Standard_LRS \
+  --location eastus
+  
+27: ommand to place the storage account connection string into an environment variable named AZURE_STORAGE_CONNECTION_STRING
+export AZURE_STORAGE_CONNECTION_STRING=$(az storage account show-connection-string \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --name $STORAGE_ACCOUNT_NAME \
+  --output tsv)
+
+28: Command to create a file share, named aci-share-demo, in the storage account.
+az storage share create --name aci-share-demo
+
+29: command to get the storage account key.
+STORAGE_KEY=$(az storage account keys list \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --account-name $STORAGE_ACCOUNT_NAME \
+  --query "[0].value" \
+  --output tsv)
+  
+30: Command to create a container that mounts /aci/logs/ to your file share.
+
+az container create \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --name aci-demo-files \
+  --image microsoft/aci-hellofiles \
+  --location eastus \
+  --ports 80 \
+  --ip-address Public \
+  --azure-file-volume-account-name $STORAGE_ACCOUNT_NAME \
+  --azure-file-volume-account-key $STORAGE_KEY \
+  --azure-file-volume-share-name aci-share-demo \
+  --azure-file-volume-mount-path /aci/logs/
+  
+31: command to display the files that are contained in your file share.
+az storage file list -s aci-share-demo -o table
+
+32: download a file to your Cloud Shell session. 
+az storage file download -s aci-share-demo -p <filename>
+
+33: command to see the output from the container's running application.
+az container logs \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --name mycontainer
+
+34: command provides diagnostic information during container startup. 
+az container attach \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --name mycontainer
+  
+35: command to start an interactive session on your container/execute command in contaianer
+az container exec \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --name mycontainer \
+  --exec-command /bin/sh
+  
+36: Monitor CPU and memory usage on your container
+command to get the ID of your Azure container instance and store the ID in a Bash variable.
+CONTAINER_ID=$(az container show \
+  --resource-group 48d5f2ae-20d4-488f-99da-50a2609044cf \
+  --name mycontainer \
+  --query id \
+  --output tsv)
+command to retrieve CPU usage information.
+az monitor metrics list \
+  --resource $CONTAINER_ID \
+  --metric CPUUsage \
+  --output table
+command to retrieve memory usage information.
+az monitor metrics list \
+  --resource $CONTAINER_ID \
+  --metric MemoryUsage \
+  --output table

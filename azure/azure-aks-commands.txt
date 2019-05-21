@@ -1,0 +1,55 @@
+az group create --name sj-k8-poc --location eastus
+az acr create --name sjacregistry --resource-group sj-k8-poc --sku Basic
+az acr login --name <acrName>
+
+sensible-editor cloud-init.txt
+#include https://get.docker.com
+
+az vm create \
+    --resource-group sj-k8-poc \
+    --name myDockerVM \
+    --image UbuntuLTS \
+    --admin-username azureuser \
+    --generate-ssh-keys \
+    --custom-data cloud-init.txt
+	
+	az vm open-port --port 80 \
+    --resource-group sj-k8-poc \
+	--name myDockerVM
+	
+ssh azureuser@40.121.18.121
+
+sudo apt install docker-compose
+
+git clone https://github.com/Azure-Samples/azure-voting-app-redis.git
+cd azure-voting-app-redis
+
+sudo docker-compose up -d
+
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+sudo apt install gnupg2 pass
+
+az login -u u53538@ust-global.com -p Welcome2ust
+
+az acr login --name sjacregistry
+
+To get login server address
+az acr list --resource-group sj-k8-poc --query "[].{acrLoginServer:loginServer}" --output table
+
+Tag the image to docker registry address
+docker tag azure-vote-front sjacregistry.azurecr.io/azure-vote-front:v1
+
+Push image to registry
+docker push sjacregistry.azurecr.io/azure-vote-front:v1
+
+List images in registry
+az acr repository list --name sjacregistry --output table
+
+To see the tags for a specific image
+az acr repository show-tags --name sjacregistry --repository azure-vote-front --output table
+
+Create a service principal using the az ad sp create-for-rbac command. 
+az ad sp create-for-rbac --skip-assignment
+Make a note of the appId and password. These values are used in the following steps.
+
+az acr show --resource-group sj-k8-poc --name sjacregistry --query "id" --output tsv
