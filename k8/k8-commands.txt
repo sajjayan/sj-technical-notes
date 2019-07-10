@@ -1,0 +1,130 @@
+Create deployment :
+kubectl create -f slack-codelab-deployment.yaml --record
+
+Check deployment changes :
+kubectl rollout history deployment/slack-codelab
+
+Print kubectl to a cluster:
+kubectl config usecontext minikube
+
+view  logs :
+kubectl logs <podname>
+
+Port forwarding :
+kubectl port-forward nodehellowrld.com 8081:3000
+
+RUn docker and to termincsate with ctrl C
+sudo usermod -G docker docker -it
+
+AWS : 
+kops  - tool in aws for kubernetes
+sudo snap install kubectl --classic
+sudo apt-get install python-pip
+sudo pip install awscli
+create docker reigistyr k8s-image
+busybox
+
+create docker image:
+docker build -t gcr.io/${PROJECT_ID}/slack-codelab:v1 .
+
+run docker image locally:
+docker run -d \
+    -v $(pwd)/:/config \
+    -e slack_token_path=/config/slack-token \
+    gcr.io/${PROJECT_ID}/slack-codelab:v1
+
+push docker image to registry:
+gcloud docker -- push gcr.io/${PROJECT_ID}/slack-codelab:v1
+
+Create kuebrnetes cluster:
+gcloud container clusters create my-cluster \
+      --num-nodes=2 \
+      --zone=us-central1-f \
+      --machine-type n1-standard-1
+
+List compute engine in kubernets cluster:
+gcloud compute instances list
+
+Create  secret : 
+kubectl create secret generic slack-token --from-file=./slack-token
+
+Create deployment :
+kubectl create -f slack-codelab-deployment.yaml --record
+
+Check deployment changes :
+kubectl rollout history deployment/slack-codelab
+
+ctrl p ctrl q to exit without kidlling container
+docker inspect dockerid
+docker rm -v $(docker ps -aq -f ststus=exited)
+
+
+disable firewall - ufw disable
+Run iptables -F to clear all the rules on the instance
+
+connad to restart pod manually 
+kubectl get pod PODNAME -n NAMESPACE -o yaml | kubectl replace --force -f -
+
+
+kubeadm join 172.31.53.27:6443 --token y4hz91.cy684zk6igpm6w1s --discovery-token-ca-cert-hash sha256:db729db65d16fcc1ab158eae612791ea7e7476501b111b15a42660a6bce9891e
+
+
+ to trouble shoot pod issues -  kubectl get pods vote -o yaml
+kubectl get pod
+kubectl get pods -o wide
+kubectl edit pod vote
+to connect to the pod -  kubectl exec -it podname sh/bash
+to connect to a container inside a pod -  kubectl exec -it podname sh/bash -c containername
+kubectl logs podname -c containername
+watch -n 1 kubectl get  pod,deploy,rs,svc --show-labels
+https://coggle.it/diagram/WqDstdMjEY3T_4/t/containerspec-v1-core-container
+
+ctrl p ctrl q to exit without kidlling container
+docker inspect dockerid
+docker rm -v $(docker ps -aq -f ststus=exited)
+
+Command to restart pod manually 
+kubectl get pod PODNAME -n NAMESPACE -o yaml | kubectl replace --force -f -
+
+kubectl get nodes
+kubectl get pods
+kubectl version
+kubectl get deployments
+kubectl describe $POD_NAME detail  of the pod
+kubectl logs $POD_NAME gete the logs
+kubectl exec $POD_NAME env get the env variable names 
+kubectl exec -ti $POD_NAME bash   start  and connect to the pod conainer
+kubectl get services
+kubectl get pods -l run=kubernetes-bootcamp
+kubectl get services -l run=kubernetes-bootcamp
+kubectl scale deployments/kubernetes-bootcamp --replicas=4
+kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2
+kubectl rollout status deployments/kubernetes-bootcamp
+kubectl rollout undo deployments/kubernetes-bootcamp
+
+kubeadm token list
+kubeadm token list
+sudo iptables -L
+cat /etc/default/ufw
+cat /etc/default/ufw
+cat /etc/default/ufw
+cat /etc/default/ufw
+ufw status
+ufw disable
+ufw status numbered
+cat /etc/network/interface
+iptables -X
+iptables -P INPUT ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -P FORWARD ACCEPT
+ifconfig -a | grep inet
+nc -vz :172.31.53.27 6443
+route -n
+netstat –antpu | grep sshd
+iptables -nvL –line-number
+iptables -F
+
+kubectl create service nodeport apache --tcp=80:80
+view /var/lib/docker/containers/67dc3a9a38aba86ae515492cfc9fcd12ba67f9b05f7e1dc761e27eecc228831a/67dc3a9a38aba86ae515492cfc9fcd12ba67f9b05f7e1dc761e27eecc228831a-json.log
+kubectl ip
+

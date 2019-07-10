@@ -1,0 +1,29 @@
+k8 provides loadbalancing - level 4 and 7.
+Featurs of  Container orchestration  engine - clustering, scheduling, scaling, load balaning, faultolerence, app deployment
+why k8?  by google, distild version of all there  learnings .
+   Battle hardded
+   amount of features that k8 has is over welhming.
+   Amazing sohestication and  control it gives us.
+   Truely OPEN. use k8 to run all type of contianers - docker runc, rkt. Any tool can go and integrate with k8 easily. redhar openshift is completed based on k8
+   Community, huge community for k8. Truely community driven project.
+Negatives  of k8:
+  They have made it complex. Documentation is bit complex. 0 to dev setup was difficlut but now getting better and  simpler. Its non native approach. in k8 u have to learn new concepts, specs  and new tool.Those are some of the downsides.
+
+Key concepts which k8 has.
+   lets begin with namespaces
+   Once u start talkign about considering as one single super computer or inteface then things start bcomming simpler.
+   in order to slpit to seperate one project or product from another we can split the clustoer as namespaces
+   Pods-  unit of deployment in k8. Network namespace shared volumne and hostname is  the onky one going to be shared between the containers of same pod
+   One pod cannot be shared  into two nodes
+   in pod , labeling and metadata is important.. thats somethin which I want to emphasise on
+   Vailability - replcasets, relica controllers and deplyments:  why do we need ti , when d owe need it, lets have a look
+   reilication ocntroller is old, has  been depricated
+   Replica set is new 
+   difference btwen them is set, in relication controlelr u can ghave only and , but in replica set u can have or
+    Update - release strategy to be defined 
+	replication controller - rolling update
+	Replica set +  update strategy= deployments
+	Service discovery and loadbalancing:
+
+   
+  
