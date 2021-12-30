@@ -23,4 +23,64 @@ To mount the disk, run the following command:
 
 tcp dump command
 -> tcpdump -i lc -x port 2379
+
+python2 -c "import sys; print(sys.path)"   comamnd to check the path of installed package
+pip show packagename
+other packages managers
+easy_install    easy_install install app   (app will be app.egg)
+wheels   pip install app.whl
+sudo curl -O https://downloads.apache.org/tomcat/tomcat-8/v8.5.65/bin/apache-tomcat-8.5.65.tar.gz;
+
+sudo tar -xvf apache-tomcat-8.5.65.tar.gz
+
+Run sudo sed -i 's/8080/5000/g' app.py; python app.py
+
+ pm2 start app.js -i 4
+
+Run cd /opt/ ; sudo sed -i 's/8080/9090/g' apache-tomcat-8.5.53/conf/server.xml;
+
+apache tomcat by default listeens to all interfaces/ips
+
+Adding "&" at the end will move the process to run in background. When you execute a Unix job in the background ( using &) and logout from the session, your process will get killed. You can avoid this with nohup
+
+command to create a CSR -  
+openssl req -new -newkey rsa:2048 -nodes -keyout app01.key -out app01.csr
+
+commnad to create self signed certificate , if ca not available
+cd into /etc/httpd/certs directory and run command sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout app01.key -out app01.crt and then pass in the details given above.
+
+To test if server is using correct certificate or not run this command and check if it returns your certificate:
+
+echo | openssl s_client -showcerts -servername app01.com -connect app01:443 2>/dev/null | openssl x509 -inform pem
+json2yaml.com
+
+not able to install ansible in centos then run this command - 
+sudo yum install epel-release
+then run sudo yum install ansible
+
+if ip not assigned to the centos vm then run below command
+
+sudo nmtui
+
+Run the command cat /etc/*release* and identify the name of OS
   
+linux command - 
+whatis date
+apropos modpr
+echo $SHELL
+chsh ---to change shell
+env - lists all environemnt variables
+which date   - gives the location of a command
+uname -r  -> to display teh kernel version
+dmesg - kernel messages ex: - dmesg | grep -i usb
+lsblk
+lspci
+lscpu
+lsmem --summary
+free -m [or -g or -k]
+lshw  -> for hardware configuration
+runlevel  -> run mode
+systemctl get-default
+df -hP  --> mounted file system
+sudo file /root/filename   -> to find the type of file
+
