@@ -1,0 +1,26 @@
+use the sed command to replace the PROJECT_ID placeholder string with your Google Cloud Platform project ID using this command:
+-> sed -i -e "s/PROJECT_ID/$DEVSHELL_PROJECT_ID/" mydeploy.yaml
+
+command to run cpu load moke
+-> dd if=/dev/urandom | gzip -9 >> /dev/null &
+
+To see details about the RAM installed on your VM, run the following command:
+-> sudo dmidecode -t 17
+
+To verify the number of processors, run the following command:
+-> nproc
+
+To see details about the CPUs installed on your VM, run the following command:
+-> lscpu
+
+To format the disk, run the following command:
+-> sudo mkfs.ext4 -F -E lazy_itable_init=0,\
+ lazy_journal_init=0,discard \
+ /dev/disk/by-id/google-minecraft-disk
+ 
+To mount the disk, run the following command:
+-> sudo mount -o discard,defaults /dev/disk/by-id/google-minecraft-disk /home/minecraft
+
+tcp dump command
+-> tcpdump -i lc -x port 2379
+  
