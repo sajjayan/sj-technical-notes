@@ -1,0 +1,119 @@
+Unit Testing Documentation
+
+Overview
+This document provides guidelines and best practices for writing unit tests and documenting test cases for Python projects.
+
+Table of Contents
+1. Introduction to Unit Testing
+2. Writing Unit Tests
+    - Choosing a Testing Framework
+    - Organizing Test Files
+    - Anatomy of a Unit Test
+    - Testing Best Practices
+3. Documenting Test Cases
+    - Test Case Description
+    - Preconditions
+    - Test Steps
+    - Expected Results
+    - Example Test Case
+4. Running Tests
+5. Conclusion
+6. References
+
+1. Introduction to Unit Testing
+Unit testing is a software testing technique where individual units or components of a software application are tested in isolation to ensure they function correctly. By isolating each component and testing it independently, developers can identify and fix bugs early in the development cycle, leading to more reliable and maintainable code.
+
+2. Writing Unit Tests
+      Choosing a Testing Framework
+There are several testing frameworks available for Python, including `unittest`, `pytest`, and `nose`. Choose a framework that best suits your project's requirements and familiarity with the framework.
+
+    Organizing Test Files
+Organize your test files in a separate directory structure parallel to your source code. Each test file should correspond to a module or package in your source code.
+
+Anatomy of a Unit Test
+A typical unit test consists of the following elements:
+- Test setup: Initialize the necessary objects and resources.
+- Test execution: Invoke the method or function being tested.
+- Assertions: Verify the expected behavior or outcome.
+
+Testing Best Practices
+- Write tests for both positive and negative scenarios.
+- Keep tests independent and isolated from each other.
+- Use descriptive test method names that convey the intent of the test.
+- Use setup and teardown methods to prepare and clean up test fixtures.
+
+ 3. Documenting Test Cases
+Test case documentation provides detailed information about the purpose, steps, and expected results of each test case.
+
+ Test Case Description
+Provide a brief description of the test case, including its purpose and objective.
+
+ Preconditions
+List any preconditions or prerequisites required for executing the test case.
+
+ Test Steps
+Outline the steps involved in executing the test case, including any inputs or actions taken.
+
+ Expected Results
+Specify the expected outcome or behavior of the test case.
+
+Example Test Case
+```
+Test Case Name: test_data _with_mocked_csv_read
+Description: Verify the data function reads from a CSV file
+Preconditions: The data function is implemented and available.
+Test Steps:
+1. Mock the behavior  to read from a CSV file.
+2. Call the data function with the table name.
+3. Assert that the returned DataFrame contains the expected data from the CSV file.
+Expected Results: The data function should read data from the specified CSV file and return a DataFrame containing the expected data.
+```
+
+4. Utility Functions and Mocks
+Utility Functions
+- `add()`: Function to add two numbers.
+- `sub()`: Function to subtract two numbers.
+- `read()`: Function to read data from a file.
+- `write()`: Function to write data to a file.
+
+Mock Functions
+- `mock_add()`: Mock function for the `add()` utility function.
+- `mock_sub()`: Mock function for the `sub()` utility function.
+- `mock_read()`: Mock function for the `read()` utility function.
+- `mock_write()`: Mock function for the `write()` utility function.
+
+5. Test Cases
+Select Column Test Case
+```
+Test Case Name: test_select_column
+Description: Verify the functionality of the selectColumn() function.
+Preconditions: The selectColumn() function is implemented and available.
+Test Steps:
+1. Call the selectColumn() function with a DataFrame and a column name.
+2. Assert that the returned DataFrame contains only the selected column.
+Expected Results: The selectColumn() function should return a DataFrame with only the selected column.
+```
+
+Add Column Test Case
+```
+Test Case Name: test_add_column
+Description: Verify the functionality of the addColumn() function.
+Preconditions: The addColumn() function is implemented and available.
+Test Steps:
+1. Call the addColumn() function with a DataFrame and a new column.
+2. Assert that the returned DataFrame contains the
+
+ new column.
+Expected Results: The addColumn() function should return a DataFrame with the new column added.
+```
+
+6. Running Tests
+Provide instructions for running the unit tests using the chosen testing framework.
+
+7. Conclusion
+Unit testing is an essential practice in software development that helps improve code quality, reliability, and maintainability. By following the guidelines outlined in this document, developers can write effective unit tests and document test cases effectively.
+
+8. References
+- [Python unittest Documentation](https://docs.python.org/3/library/unittest.html)
+- [pytest Documentation](https://docs.pytest.org/en/latest/)
+
